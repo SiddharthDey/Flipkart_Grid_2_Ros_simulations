@@ -1,0 +1,106 @@
+<?xml version='1.0'?>
+
+<robot name="Rover" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        </plugin>
+</gazebo>
+
+<link name="base_link">
+
+        <inertial>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="19.0"/>
+            <inertia ixx=" 0.206625" iyy="0.691125" izz=" 0.8949" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+
+        <collision>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+	
+                <box size="0.66 0.36 0.03"/>
+            </geometry>
+
+        </collision>
+
+        <visual>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.66 0.36 0.03"/>
+            </geometry>
+
+            <material name="silver">
+                <color rgba="0 1 0 1"/>
+            </material>
+        </visual>
+
+</link>
+
+<gazebo reference="base_link">
+        <material>Gazebo/Green</material>
+	<kp>1000000.0</kp>
+        <kd>1000000.0</kd>
+        <mu1>0.1</mu1>
+        <mu2>0.1</mu2>
+</gazebo>
+
+<link name="leg1">
+
+        <inertial>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="19.0"/>
+            <inertia ixx=" 0.206625" iyy="0.691125" izz=" 0.8949" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+
+        <collision>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+	
+                <box size="0.5 0.5 0.5"/>
+            </geometry>
+
+        </collision>
+
+        <visual>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.5 0.5 0.5"/>
+            </geometry>
+
+            <material name="silver">
+                <color rgba="0 1 0 1"/>
+            </material>
+        </visual>
+
+</link>
+
+<gazebo reference="leg1">
+        <material>Gazebo/Green</material>
+	<kp>1000000.0</kp>
+        <kd>1000000.0</kd>
+        <mu1>0.1</mu1>
+        <mu2>0.1</mu2>
+</gazebo>
+
+<gazebo>
+<joint name="base_link_leg1_joint" type="screw">
+  <parent>base_link</parent>
+  <child>leg1</child>
+  <axis>
+    <xyz>0 0 1</xyz>
+  </axis>
+  <thread_pitch>3141.6</thread_pitch>
+  </joint>
+ </gazebo>
+ <transmission name="torso_lift_trans" type="pr2_mechanism_model/SimpleTransmission">
+   <actuator name="torso_lift_motor"/>
+<joint name="base_link_leg1_joint"/>
+<mechanicalReduction>-47641.53</mechanicalReduction>
+<simulated_actuated_joint name="torso_lift_motor_screw_joint" simulated_reduction="3141.6"/>
+</transmission>
+
+
+
+
+</robot>
